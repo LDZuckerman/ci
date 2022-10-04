@@ -1,0 +1,28 @@
+name: Tests
+
+on:  
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:   
+  unit_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+            cd test/unit
+            python -m unittest test_utils
+             
+  code_style:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checout@v2
+      - uses: conda-incubator/setup-miniconda@v2
+        with: 
+          activeate-environment: yaargh
+          environment-file: environment.yml
+      - run: pycodestyle $(git ls-files "*.py")
+      
+        
